@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (mysqli_query($conn, $query)) {
         echo "<script>alert('Data karyawan berhasil disimpan.'); 
-        window.history.back();</script>";
+        window.location.href = '../../../master/index.php?page=Karyawan#recent-karyawan';</script>";
     } else {
         echo "<script>alert('Data karyawan gagal disimpan.'); 
         window.history.back();</script>";

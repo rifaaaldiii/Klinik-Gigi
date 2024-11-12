@@ -136,7 +136,7 @@ WHERE g.nama_golongan = 'Dokter'");
         </div>
     </div>
 
-    <!-- Recent Karyawan -->
+    <!-- Recent Dokter -->
     <div class="card mt-4">
         <div class="card-body">
             <h5 class="card-title">Recent Dokter</h5>

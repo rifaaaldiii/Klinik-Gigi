@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (mysqli_query($conn, $query)) {
         echo "<script>alert('Data dokter berhasil disimpan.'); 
-        window.history.back();</script>";
+        window.location.href = '../../../master/index.php?page=Dokter';</script>";
     } else {
         echo "<script>alert('Data dokter gagal disimpan.'); 
         window.history.back();</script>";
