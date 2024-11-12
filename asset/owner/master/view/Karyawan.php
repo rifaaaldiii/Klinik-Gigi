@@ -2,7 +2,7 @@
 $query_karyawan = mysqli_query($conn, "SELECT k.*, g.nama_golongan 
 FROM karyawan k 
 JOIN golongan g ON k.golongan_id = g.id
-WHERE g.nama_golongan = 'Dokter'");
+WHERE g.nama_golongan != 'Dokter'");
 
 ?>
 

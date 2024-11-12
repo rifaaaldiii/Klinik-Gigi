@@ -15,32 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $golongan = $_POST['golongan'];
     $alamat = $_POST['alamat'];
 
-    // Validasi data jika ada yang kosong
-    if (empty($nama) || empty($nip) || empty($nik) || empty($jenis_kelamin) || empty($tanggal_lahir) || empty($no_telp) || empty($no_rekening) || empty($agama) || empty($golongan) || empty($alamat)) {
-        echo "<script>alert('Semua field harus diisi.'); 
-        window.history.back();</script>";
-        exit;
-    }
+    // Validasi data jika diperlukan
 
-    // Ubah query menjadi UPDATE
-    $query = "UPDATE karyawan SET 
-              nama='$nama', 
-              jenis_kelamin='$jenis_kelamin', 
-              tanggal_lahir='$tanggal_lahir', 
-              telpon='$no_telp', 
-              no_rek='$no_rekening', 
-              agama='$agama', 
-              golongan_id='$golongan', 
-              alamat='$alamat',
-              nip = '$nip',
-              nik = '$nik'
-              WHERE id='$id'";
+    $query = "UPDATE karyawan SET nama='$nama', nip='$nip', nik='$nik', jenis_kelamin='$jenis_kelamin', tanggal_lahir='$tanggal_lahir', telpon='$no_telp', no_rek='$no_rekening', agama='$agama', golongan_id='$golongan', alamat='$alamat' WHERE id='$id'";
 
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Data karyawan berhasil diperbarui.'); 
+        echo "<script>alert('Data karyawan berhasil disimpan.'); 
         window.history.back();</script>";
     } else {
-        echo "<script>alert('Data karyawan gagal diperbarui.'); 
+        echo "<script>alert('Data karyawan gagal disimpan.'); 
         window.history.back();</script>";
     }
 
