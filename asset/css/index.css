@@ -1,0 +1,236 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+* {
+  transition: all 0.3s ease;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border: 1px solid #000;
+  box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.form-control {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 12px;
+  margin-bottom: 15px;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #000;
+  transform: translateX(5px);
+  background-color: #f8f9fa;
+}
+
+.btn-primary {
+  background: #000;
+  border: 1px solid #000000;
+  box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.9);
+  border-radius: 5px;
+  padding: 12px;
+  width: 100%;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.btn-primary:hover {
+  background: #000;
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.9);
+  border: 1px solid #000;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo h2 {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.logo span {
+  color: #6c757d;
+}
+
+.logo-icon {
+  margin-bottom: 15px;
+}
+
+.logo-icon img {
+  width: 100px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo-icon img:hover {
+  transform: scale(1.1);
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  position: relative;
+  display: inline-block;
+}
+
+.form-label::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.form-control:focus + .form-label::after {
+  width: 100%;
+}
+
+.forgot-password {
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+  display: block;
+  text-align: right;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Animasi shake untuk input invalid */
+.form-control:invalid:focus {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(5px);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+}
+
+/* Style untuk form group */
+.form-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+/* Style untuk input */
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-size: 16px;
+  background: transparent;
+  transition: all 0.3s ease;
+  box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.9);
+}
+
+/* Style untuk label floating */
+.form-group label {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #777;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  background: #fff;
+  padding: 0 5px;
+}
+
+/* Animasi saat input focus atau terisi */
+.form-control:focus,
+.form-control:not(:placeholder-shown) {
+  border-color: #000;
+  outline: none;
+}
+
+.form-control:focus + label,
+.form-control:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 14px;
+  color: #000;
+  font-weight: 500;
+}
+
+/* Hapus placeholder bawaan */
+.form-control::placeholder {
+  color: transparent;
+}
+
+.divider {
+  position: relative;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  width: 45%;
+  height: 1px;
+  background: #dee2e6;
+  left: 0;
+  top: 50%;
+}
+
+.divider::after {
+  content: "";
+  position: absolute;
+  width: 45%;
+  height: 1px;
+  background: #dee2e6;
+  right: 0;
+  top: 50%;
+}
+
+.divider-text {
+  background: #fff;
+  padding: 0 10px;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.btn-outline-dark {
+  box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.9);
+  transition: all 0.3s ease;
+}
+
+.btn-outline-dark:hover {
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.9);
+}
