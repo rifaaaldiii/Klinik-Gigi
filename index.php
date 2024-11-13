@@ -52,7 +52,7 @@
     <!-- <div class="divider mt-4 mb-3 text-center">
       <span class="divider-text">atau</span>
     </div> -->
-    <div class="divider mt-5 mb-2 text-center">
+    <div class="mt-5 mb-2 text-center">
       <small class="text-muted">&copy; 2024 Inovasi Digital Co. All rights reserved.</small>
     </div>
 

@@ -307,6 +307,8 @@
                     </div>
                 </div>
 
+                <input type="hidden" name="tanggal" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-submit mt-4" name="simpan">
                         Simpan
