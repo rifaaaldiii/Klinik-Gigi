@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $notrans = $_POST['notrans'];
     $asistens = $_POST['asistens_id'];
     $tipe_regio = $_POST['tipe_regio'];
+    $tanggal = $_POST['tanggal'];
     if ($tipe_regio == '1') {
         $ro1 = 0;
         $ro2 = 0;
@@ -29,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $non_regio = 0;
     }
 
-    $query = "INSERT INTO asistens (id, notrans, id_karyawan, ro1, ro2, ro3, non_regio) VALUES (NULL, '$notrans', '$asistens', '$ro1', '$ro2', '$ro3', '$non_regio')";
+    $query = "INSERT INTO asistens (id, notrans, id_karyawan, tanggal, ro1, ro2, ro3, non_regio) VALUES (NULL, '$notrans', '$asistens', '$tanggal', '$ro1', '$ro2', '$ro3', '$non_regio')";
     mysqli_query($conn, $query);
 
     echo "<script>alert('Asistens berhasil di input');</script>";
