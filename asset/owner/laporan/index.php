@@ -1,9 +1,9 @@
 <?php
-include "../../env/env.php";
+include "../../../env/env.php";
 session_start();
 
 if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESSION['username']) && !isset($_SESSION['role'])) {
-    header("location:../../index.php");
+    header("location:../../../index.php");
 }
 ?>
 
@@ -20,8 +20,8 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESS
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="icon" href="../img/logo.png" />
-    <link rel="stylesheet" href="../css/all.css" />
+    <link rel="icon" href="../../img/logo.png" />
+    <link rel="stylesheet" href="../../css/all.css" />
 </head>
 
 <body>
@@ -44,13 +44,22 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESS
                     <?php echo $_SESSION['username']; ?>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><span class="dropdown-item">Username: <?php echo $_SESSION['username']; ?></span></li>
-                    <li><span class="dropdown-item">Email: <?php echo $_SESSION['email']; ?></span></li>
+                    <li>
+                        <span class="dropdown-item">Username:
+                            <?php echo $_SESSION['username']; ?></span>
+                    </li>
+                    <li>
+                        <span class="dropdown-item">Email:
+                            <?php echo $_SESSION['email']; ?></span>
+                    </li>
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
                     <li>
-                        <a class="dropdown-item" href="../app/logout.php" onclick="return confirm('Apakah Anda yakin ingin keluar ?');">Logout</a>
+                        <a
+                            class="dropdown-item"
+                            href="../../app/logout.php"
+                            onclick="return confirm('Apakah Anda yakin ingin keluar ?');">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -63,15 +72,21 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESS
             <div class="col-xl-2 col-lg-3 col-md-4">
                 <div class="sidebar" id="sidebar">
                     <div class="nav flex-column">
-                        <a href="index.php?page=Dashboard" class="nav-link <?php echo $_GET['page'] == 'Dashboard' ? 'active' : ''; ?>">
+                        <a
+                            href="../index.php?page=Dashboard"
+                            class="nav-link <?php echo $_GET['page'] == 'Dashboard' ? 'active' : ''; ?>">
                             <i class="fas fa-home"></i> Dashboard
                         </a>
 
-                        <a href="index.php?page=Transaksi" class="nav-link <?php echo $_GET['page'] == 'Transaksi' ? 'active' : ''; ?>">
+                        <a
+                            href="../index.php?page=Transaksi"
+                            class="nav-link <?php echo $_GET['page'] == 'Transaksi' ? 'active' : ''; ?>">
                             <i class="fas fa-money-bill"></i> Transaksi
                         </a>
 
-                        <a href="index.php?page=Penggajian" class="nav-link <?php echo $_GET['page'] == 'Penggajian' ? 'active' : ''; ?>">
+                        <a
+                            href="../index.php?page=Penggajian"
+                            class="nav-link <?php echo $_GET['page'] == 'Penggajian' ? 'active' : ''; ?>">
                             <i class="fas fa-envelope"></i> Penggajian
                         </a>
 
@@ -85,9 +100,9 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESS
                                 <span>Laporan</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="laporan/index.php?page=Transaksi">Transaksi</a></li>
-                                <li><a class="dropdown-item" href="laporan/index.php?page=Penggajian">Penggajian</a></li>
-                                <li><a class="dropdown-item" href="laporan/index.php?page=JasaMedis">Jasa Medis</a></li>
+                                <li><a class="dropdown-item" href="index.php?page=Transaksi">Transaksi</a></li>
+                                <li><a class="dropdown-item" href="index.php?page=Penggajian">Penggajian</a></li>
+                                <li><a class="dropdown-item" href="index.php?page=JasaMedis">Jasa Medis</a></li>
                             </ul>
                         </div>
 
@@ -100,11 +115,21 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESS
                                 <span>Master Data</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="master/index.php?page=Dokter">Dokter</a></li>
-                                <li><a class="dropdown-item" href="master/index.php?page=Karyawan">Karyawan</a></li>
-                                <li><a class="dropdown-item" href="master/index.php?page=Golongan">Golongan</a></li>
-                                <li><a class="dropdown-item" href="master/index.php?page=Tindakan">Tindakan</a></li>
-                                <li><a class="dropdown-item" href="master/index.php?page=User">User</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="../master/index.php?page=Dokter">Dokter</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../master/index.php?page=Karyawan">Karyawan</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../master/index.php?page=Golongan">Golongan</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../master/index.php?page=Tindakan">Tindakan</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../master/index.php?page=User">User</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -122,7 +147,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESS
                 include 'view/' . $page . '.php';
             } else {
                 // redirect ke halaman default jika parameter page tidak ada
-                include 'view/Dashboard.php';
+                include 'view/Master.php';
             }
             ?>
         </div>
@@ -132,8 +157,8 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESS
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../js/all.js"></script>
-    <script src="../js/chart.js"></script>
+    <script src="../../js/all.js"></script>
+    <script src="../../js/chart.js"></script>
 </body>
 
 </html>

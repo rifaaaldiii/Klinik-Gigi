@@ -89,6 +89,7 @@
                             <th scope="col">Gaji Pokok</th>
                             <th scope="col">Asistensi</th>
                             <th scope="col">Total Gaji</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -111,11 +112,26 @@
                                 <td>Rp. <?= $row_penggajian['asistensi'] ?></td>
                                 <td>Rp. <?= $row_penggajian['total'] ?></td>
                                 <td>
-                                    <a href="app/penggajian/delete.php?id=<?= $row_penggajian['id'] ?>" class="btn btn-danger delete" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</a>
+                                    <?php
+                                    $badge_class = 'bg-warning'; // Default class
+                                    if ($row_penggajian['status'] === 'Completed') {
+                                        $badge_class = 'bg-success';
+                                        $link_page = 'View';
+                                    } else {
+                                        $link_page = 'Detail_transaksi';
+                                    }
+                                    ?>
+                                    <span class="badge <?php echo $badge_class; ?>"><?php echo $row_penggajian['status']; ?></span>
+                                </td>
+                                <td>
+                                    <?php if ($row_penggajian['status'] === 'Pending'): ?>
+                                        <button class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#transferModal<?= $row_penggajian['id'] ?>">
+                                            Transfer
+                                        </button>
+                                        <a href="app/penggajian/delete.php?id=<?= $row_penggajian['id'] ?>" class="btn btn-danger delete" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
-
-
                         <?php
                         }
                         ?>
@@ -126,6 +142,96 @@
         </div>
     </div>
 </div>
+
+<?php
+$query_penggajian = mysqli_query($conn, "SELECT p.*, k.nama, k.no_rek
+FROM penggajian p
+JOIN karyawan k ON p.karyawan_id = k.id
+ORDER BY p.id DESC");
+while ($row_penggajian = mysqli_fetch_assoc($query_penggajian)) {
+?>
+    <div
+        class="modal fade"
+        id="transferModal<?= $row_penggajian['id'] ?>"
+        data-bs-backdrop="static"
+        aria-labelledby="editModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="border: 1px solid #000; box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.9);">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Tindakan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form action="app/penggajian/update.php" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" name="id_penggajian" value="<?= $row_penggajian['id'] ?>">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Nama Karyawan</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="nama"
+                                    required
+                                    placeholder="Masukkan Nama"
+                                    value="<?= $row_penggajian['nama'] ?>" />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="transactionDate" class="form-label fw-bold">Total Gaji</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="total"
+                                        value="<?= $row_penggajian['total'] ?>" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-bold">No. Rekening</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="no_rek"
+                                    value="<?= $row_penggajian['no_rek'] ?>" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p
+                                    name="note"
+                                    id="note"
+                                    class="form-control text-center"
+                                    style="border:none; background-color: red; color: #fff;">
+                                    Setelah menyelesaikan transfer, Anda tidak dapat MENGHAPUS / MENGUBAH data ini.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-primary mt-2 mb-2" data-bs-dismiss="modal">
+                                Kembali
+                            </button>
+                            <button type="submit" class="btn btn-submit mt-2 mb-2 ms-2" onclick="return confirm('Apakah Anda yakin sudah melakukan transfer?')" name="simpan">
+                                Selesai
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php
+}
+?>
 
 <script>
     function updateHarga() {
