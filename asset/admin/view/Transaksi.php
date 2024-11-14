@@ -137,7 +137,7 @@ WHERE g.nama_golongan = 'Dokter'");
                                         $badge_class = 'bg-warning'; // Default class
                                         if ($row['status'] === 'Completed') {
                                             $badge_class = 'bg-success';
-                                            $link_page = 'Detail_transaksi';
+                                            $link_page = 'View';
                                         } else {
                                             $link_page = 'Detail_transaksi';
                                         }
@@ -147,7 +147,9 @@ WHERE g.nama_golongan = 'Dokter'");
 
                                     <td>
                                         <a href='index.php?page=<?= $link_page ?>&notrans=<?= $row['notrans'] ?>' class="btn btn-primary edit mb-1">View Detail</a>
-                                        <a href='app/transaksi/delete.php?id=<?= $row['id'] ?>' class="btn btn-danger delete mb-1" onclick="return confirm('Yakin ingin menghapus data ini?')">Delete</a>
+                                        <?php if ($row['status'] !== 'Completed'): ?>
+                                            <a href='app/transaksi/delete.php?id=<?= $row['id'] ?>' class="btn btn-danger delete mb-1" onclick="return confirm('Yakin ingin menghapus data ini?')">Delete</a>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php

@@ -51,7 +51,7 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESS
             if (userRole === "owner") {
               window.location.href = "asset/owner/index.php?page=Dashboard";
             } else {
-              window.location.href = "asset/admin/index.php";
+              window.location.href = "asset/admin/index.php?page=Dashboard";
             }
           }, 500);
         }, 1500);
