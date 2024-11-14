@@ -100,9 +100,9 @@ if (!isset($_SESSION['email']) && !isset($_SESSION['password']) && !isset($_SESS
                 <span>Laporan</span>
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Transaksi</a></li>
-                <li><a class="dropdown-item" href="#">Penggajian</a></li>
-                <li><a class="dropdown-item" href="#">Jasa Medis</a></li>
+                <li><a class="dropdown-item" href="../laporan/index.php?page=Transaksi">Transaksi</a></li>
+                <li><a class="dropdown-item" href="../laporan/index.php?page=Penggajian">Penggajian</a></li>
+                <li><a class="dropdown-item" href="../laporan/index.php?page=JasaMedis">Jasa Medis</a></li>
               </ul>
             </div>
 

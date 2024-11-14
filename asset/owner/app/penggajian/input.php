@@ -9,15 +9,16 @@ if (isset($_POST['simpan'])) {
 
     // Cek apakah input kosong
     if (empty($id_karyawan)) {
-        echo "<script>alert('Data tidak ditemukan'); window.history.back();</script>";
+        echo "<script>alert('Data sudah ada dipenggajian bulan ini!'); window.history.back();</script>";
         exit;
     }
 
     $tanggal = $_POST['tanggal'];
     $asistensi = '0';
     $total_gaji = '0';
+    $status = 'Pending';
 
-    $query_insert = mysqli_query($conn, "INSERT INTO penggajian (karyawan_id, gaji_pokok, tanggal, asistensi, total) VALUES ('$id_karyawan', '$gaji_pokok', '$tanggal', '$asistensi', '$total_gaji')");
+    $query_insert = mysqli_query($conn, "INSERT INTO penggajian (karyawan_id, gaji_pokok, tanggal, asistensi, total, status) VALUES ('$id_karyawan', '$gaji_pokok', '$tanggal', '$asistensi', '$total_gaji', '$status')");
     if ($query_insert) {
         $id_penggajian = mysqli_insert_id($conn);
         echo "<script>alert('Data berhasil disimpan'); window.location.href = '../../index.php?page=Detail_penggajian&id_karyawan=$id_karyawan&id_penggajian=$id_penggajian';</script>";
