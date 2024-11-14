@@ -498,8 +498,8 @@ while ($row_detail = mysqli_fetch_assoc($query_detail)) {
                                     class="form-control"><?php echo $row_detail['catatan']; ?></textarea>
                             </div>
                         </div>
-                        <input type="hidden" id="grand_total_fix" name="grand_total_fix">
-                        <input type="hidden" id="jm_total_fix" name="jm_total_fix">
+                        <input type="hidden" id="grand_total_fix_<?php echo $id; ?>" name="grand_total_fix">
+                        <input type="hidden" id="jm_total_fix_<?php echo $id; ?>" name="jm_total_fix">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
@@ -521,16 +521,18 @@ while ($row_detail = mysqli_fetch_assoc($query_detail)) {
                         // Update jm_update based on diskon_jm
                         const newJm = originalJm - ((diskonJm / 100) * 2) * originalJm;
                         document.getElementById('jm_update_' + id).value = newJm;
-                        document.getElementById('jm_total_fix').value = newJm;
-                        // Update grand_total_update based on dp and diskon_jm
-                        const newGrandTotalDiskon = originalGrandTotal * (diskonJm > 0 ? (diskonJm / 100) : 1);
-                        document.getElementById('grand_total_update_' + id).value = newGrandTotalDiskon - dp;
-                        document.getElementById('grand_total_fix').value = newGrandTotalDiskon - dp;
+                        document.getElementById('jm_total_fix_' + id).value = newJm;
+
+                        const newGrandTotalDiskon = originalGrandTotal - (originalJm - newJm);
+                        const finalGrandTotal = newGrandTotalDiskon - dp;
+
+                        document.getElementById('grand_total_update_' + id).value = finalGrandTotal;
+                        document.getElementById('grand_total_fix_' + id).value = finalGrandTotal;
 
                         if (dp == 0) {
                             document.getElementById('catatan_' + id).value = '';
                         } else {
-                            document.getElementById('catatan_' + id).value = 'Sisa Pembayaran : Rp.' + (newGrandTotalDiskon - dp);
+                            document.getElementById('catatan_' + id).value = 'Sisa Pembayaran : Rp.' + finalGrandTotal;
                         }
                     }
 
