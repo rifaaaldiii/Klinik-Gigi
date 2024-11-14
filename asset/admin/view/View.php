@@ -76,6 +76,7 @@
                                     <th scope="col">Jasa Medis</th>
                                     <th scope="col">Modal</th>
                                     <th scope="col">Diskon</th>
+                                    <th scope="col">Diskon JM</th>
                                     <th scope="col">DP</th>
                                     <th scope="col">Catatan</th>
                                     <th scope="col">Grand Total</th>
@@ -100,6 +101,7 @@
                                             <td><?php echo $row['jm']; ?></td>
                                             <td>Rp. <?php echo $row['modal']; ?></td>
                                             <td><?php echo $row['diskon']; ?>%</td>
+                                            <td><?php echo $row['diskon_jm']; ?>%</td>
                                             <td>Rp. <?php echo $row['dp']; ?></td>
                                             <td><?php echo $row['catatan']; ?></td>
                                             <td>Rp. <?php echo $row['total']; ?></td>

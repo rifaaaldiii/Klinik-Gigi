@@ -49,7 +49,7 @@
                                 <td><?= $data['nama'] ?></td>
                                 <td>Rp. <?= $data['total_harga'] ?></td>
                                 <td>Rp. <?= $data['total_jm'] ?></td>
-                                <td>Rp. <?= $data['total_diskon_jm'] ?></td>
+                                <td><?= $data['total_diskon_jm'] ?>%</td>
                                 <td>
                                     <a href="pdf/jasamedis.php?dokter=<?= $data['dokter'] ?>&bulan=<?= date('Y-m', strtotime($data['tanggal']))  ?>" class="btn btn-success" target="_blank" style="border: 1px solid #000;">
                                         <i class="fa-solid fa-print"></i> Print
