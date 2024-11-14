@@ -10,12 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $total_jasa_medis = $_POST['total_jasa_medis'];
     $modal = $_POST['modal'];
     $diskon_lyt = $_POST['diskon_lyt'];
-    $diskon_jm = $_POST['diskon_jm'];
-    $dp = $_POST['dp'];
     $grand_total = $_POST['grand_total'];
-    $catatan = $_POST['catatan'];
+    $dp = '0';
+    $diskon_jm = '0';
 
-    $query = "INSERT INTO detail_transaksi (id, notrans, tindakan, harga, jm, modal, total, diskon, dp, catatan) VALUES (NULL, '$notrans', '$nama_tindakan', '$harga_tindakan', '$total_jasa_medis', '$modal', '$grand_total', '$diskon_lyt',  '$dp', '$catatan')";
+    $query = "INSERT INTO detail_transaksi (id, notrans, tindakan, harga, jm, modal, total, diskon, dp, diskon_jm) VALUES (NULL, '$notrans', '$nama_tindakan', '$harga_tindakan', '$total_jasa_medis', '$modal', '$grand_total', '$diskon_lyt', '$dp', '$diskon_jm')";
     mysqli_query($conn, $query);
 
     echo "<script>alert('Tindakan berhasil di input');</script>";
