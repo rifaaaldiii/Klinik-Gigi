@@ -18,6 +18,7 @@
 
             <!-- Form Input Tindakan -->
             <form action="app/penggajian/input_bonus.php" method="post">
+                <input type="hidden" name="tanggal" value="<?php echo isset($_GET['tanggal']) ? $_GET['tanggal'] : ''; ?>">
                 <input type="hidden" name="id_penggajian" value="<?php echo isset($_GET['id_penggajian']) ? $_GET['id_penggajian'] : ''; ?>">
                 <input type="hidden" name="id_karyawan" value="<?php echo isset($_GET['id_karyawan']) ? $_GET['id_karyawan'] : ''; ?>">
                 <div class="row">
@@ -131,8 +132,6 @@
 
                 <?php
                 $id_karyawan = isset($_GET['id_karyawan']) ? $_GET['id_karyawan'] : '';
-                $month = date('m');
-                $year = date('Y');
                 $query_asistens = mysqli_query($conn, "SELECT 
                 COUNT(notrans) as jumlah_pasien,
                 SUM(ro1) AS Regio_1,
@@ -140,9 +139,7 @@
                 SUM(ro3) AS Regio_3,
                 SUM(non_regio) AS non_regio
                 FROM asistens 
-                WHERE id_karyawan = '$id_karyawan'
-                AND MONTH(tanggal) = '$month'
-                AND YEAR(tanggal) = '$year'");
+                WHERE id_karyawan = '$id_karyawan' AND status = 'Pending'");
                 $asisten_data = mysqli_fetch_assoc($query_asistens);
                 ?>
 

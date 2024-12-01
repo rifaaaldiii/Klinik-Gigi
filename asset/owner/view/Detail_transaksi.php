@@ -247,18 +247,24 @@
                         <input type="hidden" name="asistens_id" id="asistens_id">
                         <datalist id="asistensList">
                             <?php
-                            $query_asistens = mysqli_query($conn, "SELECT k.*, g.nama_golongan
-                    FROM karyawan k
-                    JOIN golongan g ON k.golongan_id = g.id
-                    WHERE g.nama_golongan != 'Dokter'");
+                                $notrans = $_GET['notrans'];
+                                $query_asistens = mysqli_query($conn, "SELECT k.*, g.nama_golongan 
+                                FROM karyawan k
+                                JOIN golongan g ON k.golongan_id = g.id
+                                WHERE g.nama_golongan != 'Dokter' 
+                                AND k.id NOT IN (
+                                    SELECT id_karyawan 
+                                    FROM asistens 
+                                    WHERE notrans = '$notrans'
+                                )");
 
-                            if ($query_asistens) {
-                                while ($row_asistens = mysqli_fetch_assoc($query_asistens)) {
-                                    echo "<option value='{$row_asistens['nama']}' data-id='{$row_asistens['id']}'>";
+                                if ($query_asistens) {
+                                    while ($row_asistens = mysqli_fetch_assoc($query_asistens)) {
+                                        echo "<option value='{$row_asistens['nama']}' data-id='{$row_asistens['id']}'>";
+                                    }
+                                } else {
+                                    echo "<option value=''>Tidak ada data asistens</option>";
                                 }
-                            } else {
-                                echo "<option value=''>Tidak ada data asistens</option>";
-                            }
                             ?>
                         </datalist>
                     </div>
