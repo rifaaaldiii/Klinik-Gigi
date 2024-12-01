@@ -4,29 +4,36 @@
     <!-- Form Input Tindakan -->
     <div class="card mt-4">
         <div class="card-body">
-            <h5 class="card-title mb-4">Input Penggajian Bulan Ini</h5>
+            <h5 class="card-title mb-4">Input Penggajian</h5>
 
             <!-- Form Input Penggajian Baru -->
             <form action="app/penggajian/input.php" method="post">
+
+                <div class="row mb-3">
+                    <div class="col-md-6 mb3">
+                        <label class="form-label fw-bold">Tanggal</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= date('Y-m-d') ?>">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold">Cari Karyawan</label>
                         <input list="karyawanList" class="form-control" id="transactionNumber" name="karyawan" placeholder="Masukkan karyawan" onchange="updateHarga()" required>
                         <datalist id="karyawanList">
                             <?php
-                            $current_month = date('Y-m');
                             $query_karyawan = mysqli_query($conn, "SELECT k.*, g.nama_golongan, g.gaji_pokok,
                             g.tunjangan_makan, g.overtime, g.tunjangan_pasien, g.ro1, g.ro2, g.ro3, g.non_regio
                             FROM karyawan k 
                             JOIN golongan g ON k.golongan_id = g.id 
-                            WHERE g.nama_golongan != 'Dokter'
-                            AND k.id NOT IN (
-                                SELECT p.karyawan_id FROM penggajian p 
-                                WHERE DATE_FORMAT(p.tanggal, '%Y-%m') = '$current_month'
-                            )");
+                            JOIN asistens a ON k.id = a.id_karyawan
+                            WHERE g.nama_golongan != 'Dokter' AND a.status = 'Pending'
+                            GROUP BY k.id");
                             $karyawan_data = [];
                             while ($row = mysqli_fetch_assoc($query_karyawan)) {
-                                echo "<option value='{$row['nama']}' 
+                                echo "<option value='{$row['nama']} ({$row['nama_golongan']})' 
                                 data-gaji='{$row['gaji_pokok']}'
                                 data-tunjangan_makan='{$row['tunjangan_makan']}'
                                 data-overtime='{$row['overtime']}'
@@ -54,7 +61,6 @@
                 </div>
 
                 <input type="hidden" name="id_karyawan" id="id_karyawan">
-                <input type="hidden" name="tanggal" id="tanggal" value="<?= date('Y-m-d') ?>">
 
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-submit mt-4" name="simpan">

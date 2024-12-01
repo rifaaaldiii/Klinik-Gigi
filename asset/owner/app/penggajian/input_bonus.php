@@ -14,6 +14,8 @@ if (isset($_POST['simpan'])) {
     $asistensi = $_POST['total_asistens'];
     $id_penggajian = $_POST['id_penggajian'];
     $id_karyawan = $_POST['id_karyawan'];
+    $tanggal = $_POST['tanggal'];
+    $status = 'Completed';
     $query_insert = mysqli_query($conn, "INSERT INTO detail_gaji 
     (penggajian_id, karyawan_id, bonus, overtime, makan, jumlah_pasien, ro1, ro2, ro3, non_regio) VALUES 
     ('$id_penggajian', '$id_karyawan', '$bonus', '$jumlahovertime', '$jumlahtunjangan_makan', '$jumlahtunjangan_pasien', '$jumlahregio_1', '$jumlahregio_2', '$jumlahregio_3', '$jumlahnonregio')");
@@ -23,8 +25,9 @@ if (isset($_POST['simpan'])) {
     $total = $data_penggajian['gaji_pokok'] + $asistensi;
 
     $query_update = mysqli_query($conn, "UPDATE penggajian SET asistensi = '$asistensi', total = '$total' WHERE id = '$id_penggajian'");
+    $query_update_asistens = mysqli_query($conn, "UPDATE asistens SET status = '$status' WHERE id_karyawan = '$id_karyawan' AND status = 'Pending'");
 
-    if ($query_insert && $query_update) {
+    if ($query_insert && $query_update && $query_update_asistens) {
         echo "<script>alert('Data berhasil disimpan'); window.location.href = '../../index.php?page=Penggajian';</script>";
     } else {
         echo "<script>alert('Data gagal disimpan'); window.history.back();</script>";

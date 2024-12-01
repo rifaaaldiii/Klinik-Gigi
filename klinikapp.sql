@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2024 at 08:35 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Dec 01, 2024 at 11:26 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `klinikgigiv2`
+-- Database: `klinikapp`
 --
 
 -- --------------------------------------------------------
@@ -35,8 +35,9 @@ CREATE TABLE `asistens` (
   `ro1` varchar(25) NOT NULL,
   `ro2` varchar(25) NOT NULL,
   `ro3` varchar(25) NOT NULL,
-  `non_regio` varchar(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `non_regio` varchar(11) NOT NULL,
+  `status` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -56,7 +57,7 @@ CREATE TABLE `detail_gaji` (
   `ro3` varchar(225) NOT NULL,
   `non_regio` varchar(45) NOT NULL,
   `bonus` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -77,7 +78,7 @@ CREATE TABLE `detail_transaksi` (
   `diskon_jm` varchar(11) NOT NULL,
   `metode` varchar(20) NOT NULL,
   `catatan` varchar(225) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -87,15 +88,15 @@ CREATE TABLE `detail_transaksi` (
 
 CREATE TABLE `golongan` (
   `id` int(11) UNSIGNED NOT NULL,
-  `nama_golongan` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `nama_golongan` varchar(100) NOT NULL,
   `gaji_pokok` int(12) NOT NULL,
   `tunjangan_makan` int(12) NOT NULL,
-  `overtime` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
-  `tunjangan_pasien` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `ro1` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `ro2` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `ro3` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `non_regio` varchar(45) COLLATE utf8_unicode_ci NOT NULL
+  `overtime` varchar(11) NOT NULL,
+  `tunjangan_pasien` varchar(20) NOT NULL,
+  `ro1` varchar(45) NOT NULL,
+  `ro2` varchar(45) NOT NULL,
+  `ro3` varchar(45) NOT NULL,
+  `non_regio` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -103,9 +104,7 @@ CREATE TABLE `golongan` (
 --
 
 INSERT INTO `golongan` (`id`, `nama_golongan`, `gaji_pokok`, `tunjangan_makan`, `overtime`, `tunjangan_pasien`, `ro1`, `ro2`, `ro3`, `non_regio`) VALUES
-(1, 'Karyawan', 1950000, 17500, '550', '4000', '7500', '15000', '30000', '10000'),
-(7, 'Dokter', 0, 0, '', '', '', '', '', ''),
-(9, 'Admin', 0, 0, '0', '0', '0', '0', '0', '0');
+(1, 'Karyawan', 1950000, 17500, '550', '4000', '7500', '15000', '30000', '10000');
 
 -- --------------------------------------------------------
 
@@ -115,27 +114,18 @@ INSERT INTO `golongan` (`id`, `nama_golongan`, `gaji_pokok`, `tunjangan_makan`, 
 
 CREATE TABLE `karyawan` (
   `id` int(11) UNSIGNED NOT NULL,
-  `nip` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
-  `nik` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
-  `nama` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `jenis_kelamin` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `nip` varchar(12) NOT NULL,
+  `nik` varchar(12) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `jenis_kelamin` varchar(11) NOT NULL,
   `tanggal_lahir` date NOT NULL,
-  `telpon` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
-  `no_rek` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `agama` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `alamat` text COLLATE utf8_unicode_ci NOT NULL,
+  `telpon` varchar(12) NOT NULL,
+  `no_rek` varchar(20) NOT NULL,
+  `agama` varchar(15) NOT NULL,
+  `alamat` text NOT NULL,
   `golongan_id` int(11) UNSIGNED NOT NULL,
-  `status` varchar(11) COLLATE utf8_unicode_ci NOT NULL
+  `status` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `karyawan`
---
-
-INSERT INTO `karyawan` (`id`, `nip`, `nik`, `nama`, `jenis_kelamin`, `tanggal_lahir`, `telpon`, `no_rek`, `agama`, `alamat`, `golongan_id`, `status`) VALUES
-(26, '234324', '32432423', 'Rifaldi', 'Laki-laki', '2024-11-11', '083432423', '23438249324', 'Islam', 'PDG', 7, ''),
-(29, '23784832', '14022000054', 'Rifaldi', 'Laki-laki', '2024-11-12', '4553454', '3453454', 'Islam', 'Pandeglang\r\n', 9, ''),
-(35, '23784832', '14022000054', 'Messy Marlina', 'Perempuan', '2024-11-13', '253235423', '35232523', 'Islam', 'Lebak', 1, '');
 
 -- --------------------------------------------------------
 
@@ -147,10 +137,10 @@ CREATE TABLE `penggajian` (
   `id` int(11) UNSIGNED NOT NULL,
   `tanggal` date NOT NULL,
   `karyawan_id` int(11) UNSIGNED NOT NULL,
-  `gaji_pokok` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `asistensi` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `total` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `status` varchar(11) COLLATE utf8_unicode_ci NOT NULL
+  `gaji_pokok` varchar(255) NOT NULL,
+  `asistensi` varchar(45) NOT NULL,
+  `total` varchar(25) NOT NULL,
+  `status` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -164,7 +154,7 @@ CREATE TABLE `tindakan` (
   `nama_tindakan` varchar(225) NOT NULL,
   `jm` int(11) NOT NULL,
   `harga` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tindakan`
@@ -278,7 +268,7 @@ CREATE TABLE `transaksi` (
   `total` varchar(255) NOT NULL,
   `status` varchar(11) NOT NULL,
   `catatan` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -292,7 +282,7 @@ CREATE TABLE `user` (
   `email` varchar(45) NOT NULL,
   `password` varchar(500) NOT NULL,
   `role` varchar(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
@@ -376,19 +366,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `asistens`
 --
 ALTER TABLE `asistens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT for table `detail_gaji`
 --
 ALTER TABLE `detail_gaji`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=213;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
 
 --
 -- AUTO_INCREMENT for table `golongan`
@@ -400,13 +390,13 @@ ALTER TABLE `golongan`
 -- AUTO_INCREMENT for table `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `penggajian`
 --
 ALTER TABLE `penggajian`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
@@ -418,7 +408,7 @@ ALTER TABLE `tindakan`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
 
 --
 -- AUTO_INCREMENT for table `user`

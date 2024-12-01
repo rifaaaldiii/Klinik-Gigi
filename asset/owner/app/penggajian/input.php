@@ -21,7 +21,7 @@ if (isset($_POST['simpan'])) {
     $query_insert = mysqli_query($conn, "INSERT INTO penggajian (karyawan_id, gaji_pokok, tanggal, asistensi, total, status) VALUES ('$id_karyawan', '$gaji_pokok', '$tanggal', '$asistensi', '$total_gaji', '$status')");
     if ($query_insert) {
         $id_penggajian = mysqli_insert_id($conn);
-        echo "<script>alert('Data berhasil disimpan'); window.location.href = '../../index.php?page=Detail_penggajian&id_karyawan=$id_karyawan&id_penggajian=$id_penggajian';</script>";
+        echo "<script>alert('Data berhasil disimpan'); window.location.href = '../../index.php?page=Detail_penggajian&id_karyawan=$id_karyawan&id_penggajian=$id_penggajian&tanggal=$tanggal';</script>";
     } else {
         echo "<script>alert('Data gagal disimpan'); window.history.back();</script>";
     }
