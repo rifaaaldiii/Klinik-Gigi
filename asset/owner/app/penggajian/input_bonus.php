@@ -16,6 +16,7 @@ if (isset($_POST['simpan'])) {
     $id_karyawan = $_POST['id_karyawan'];
     $tanggal = $_POST['tanggal'];
     $status = 'Completed';
+    
     $query_insert = mysqli_query($conn, "INSERT INTO detail_gaji 
     (penggajian_id, karyawan_id, bonus, overtime, makan, jumlah_pasien, ro1, ro2, ro3, non_regio) VALUES 
     ('$id_penggajian', '$id_karyawan', '$bonus', '$jumlahovertime', '$jumlahtunjangan_makan', '$jumlahtunjangan_pasien', '$jumlahregio_1', '$jumlahregio_2', '$jumlahregio_3', '$jumlahnonregio')");

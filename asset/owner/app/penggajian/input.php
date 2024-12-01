@@ -7,13 +7,15 @@ if (isset($_POST['simpan'])) {
     $tanggal = $_POST['tanggal'];
     $gaji_pokok = $_POST['gaji_pokok'];
 
+    // Mengubah format tanggal dengan menambahkan hari terakhir bulan
+    $tanggal = date('Y-m-t', strtotime($_POST['tanggal'] . '-01'));
+
     // Cek apakah input kosong
     if (empty($id_karyawan)) {
         echo "<script>alert('Data sudah ada dipenggajian bulan ini!'); window.history.back();</script>";
         exit;
     }
 
-    $tanggal = $_POST['tanggal'];
     $asistensi = '0';
     $total_gaji = '0';
     $status = 'Pending';
