@@ -11,9 +11,9 @@
 
                 <div class="row mb-3">
                     <div class="col-md-6 mb3">
-                        <label class="form-label fw-bold">Tanggal</label>
+                        <label class="form-label fw-bold">Pilih Bulan</label>
                         <div class="input-group">
-                            <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= date('Y-m-d') ?>">
+                            <input type="month" class="form-control" name="tanggal" id="tanggal" value="<?= date('Y-m') ?>">
                         </div>
                     </div>
                 </div>
@@ -24,12 +24,19 @@
                         <input list="karyawanList" class="form-control" id="transactionNumber" name="karyawan" placeholder="Masukkan karyawan" onchange="updateHarga()" required>
                         <datalist id="karyawanList">
                             <?php
+                            $current_date = date('F Y');
+                            $tanggal = date('Y-m-t'); // Mengambil tanggal terakhir bulan ini
                             $query_karyawan = mysqli_query($conn, "SELECT k.*, g.nama_golongan, g.gaji_pokok,
                             g.tunjangan_makan, g.overtime, g.tunjangan_pasien, g.ro1, g.ro2, g.ro3, g.non_regio
                             FROM karyawan k 
-                            JOIN golongan g ON k.golongan_id = g.id 
-                            JOIN asistens a ON k.id = a.id_karyawan
-                            WHERE g.nama_golongan != 'Dokter' AND a.status = 'Pending'
+                            JOIN golongan g ON k.golongan_id = g.id
+                            LEFT JOIN asistens a ON k.id = a.id_karyawan
+                            WHERE g.nama_golongan != 'Dokter'
+                            AND NOT EXISTS (
+                                SELECT 1 FROM penggajian p 
+                                WHERE p.karyawan_id = k.id 
+                                AND p.tanggal = '$tanggal'
+                            )
                             GROUP BY k.id");
                             $karyawan_data = [];
                             while ($row = mysqli_fetch_assoc($query_karyawan)) {
@@ -73,7 +80,7 @@
 
     <div class="card mt-4">
         <div class="card-body">
-            <h5 class="card-title">Recent Karyawan</h5>
+            <h5 class="card-title">Recent Penggajian</h5>
 
             <!-- Input Pencarian -->
             <div class="mb-3">
@@ -89,7 +96,7 @@
                     <thead>
                         <tr>
                             <th scope="col">No.</th>
-                            <th scope="col">Tanggal</th>
+                            <th scope="col">Bulan/Tahun</th>
                             <th scope="col">Nama Karyawan</th>
                             <th scope="col">Golongan</th>
                             <th scope="col">Gaji Pokok</th>
@@ -111,7 +118,7 @@
                         ?>
                             <tr>
                                 <th scope="row"><?= $no++ ?></th>
-                                <td><?= $row_penggajian['tanggal'] ?></td>
+                                <td><?= date('F Y', strtotime($row_penggajian['tanggal'])) ?></td>
                                 <td><?= $row_penggajian['nama'] ?></td>
                                 <td><?= $row_penggajian['nama_golongan'] ?></td>
                                 <td>Rp. <?= $row_penggajian['gaji_pokok'] ?></td>
@@ -130,12 +137,12 @@
                                     <span class="badge <?php echo $badge_class; ?>"><?php echo $row_penggajian['status']; ?></span>
                                 </td>
                                 <td>
-                                    <?php if ($row_penggajian['status'] === 'Pending'): ?>
+                                    <?php if ($row_penggajian['status'] === 'Pending' && $row_penggajian['total'] != '0'): ?>
                                         <button class="btn btn-primary edit" data-bs-toggle="modal" data-bs-target="#transferModal<?= $row_penggajian['id'] ?>">
                                             Transfer
                                         </button>
-                                        <a href="app/penggajian/delete.php?id=<?= $row_penggajian['id'] ?>" class="btn btn-danger delete" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</a>
-                                    <?php endif; ?>
+                                        <?php endif; ?>
+                                    <a href="app/penggajian/delete.php?id=<?= $row_penggajian['id'] ?>" class="btn btn-danger delete" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</a>
                                 </td>
                             </tr>
                         <?php
