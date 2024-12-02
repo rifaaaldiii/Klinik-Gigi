@@ -12,7 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dp = $_POST['dp'];
     $catatan = $_POST['catatan'];
 
-    $query = "UPDATE detail_transaksi SET jm = '$jm', total = '$grand_total', diskon_jm = '$diskon_jm', dp = '$dp', catatan = '$catatan' WHERE id = '$id'";
+    if ($grand_total != "" && $jm != "") {
+        $query = "UPDATE detail_transaksi SET jm = '$jm', total = '$grand_total', diskon_jm = '$diskon_jm', dp = '$dp', catatan = '$catatan' WHERE id = '$id'";
+    } else if ($jm != "") {
+        $query = "UPDATE detail_transaksi SET jm = '$jm', diskon_jm = '$diskon_jm', dp = '$dp', catatan = '$catatan' WHERE id = '$id'";
+    } else {
+        $query = "UPDATE detail_transaksi SET diskon_jm = '$diskon_jm', dp = '$dp', catatan = '$catatan' WHERE id = '$id'";
+    }
     mysqli_query($conn, $query);
 
     echo "<script>alert('Tindakan berhasil di input');</script>";

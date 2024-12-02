@@ -247,18 +247,24 @@
                         <input type="hidden" name="asistens_id" id="asistens_id">
                         <datalist id="asistensList">
                             <?php
-                            $query_asistens = mysqli_query($conn, "SELECT k.*, g.nama_golongan
-                    FROM karyawan k
-                    JOIN golongan g ON k.golongan_id = g.id
-                    WHERE g.nama_golongan != 'Dokter'");
+                                $notrans = $_GET['notrans'];
+                                $query_asistens = mysqli_query($conn, "SELECT k.*, g.nama_golongan 
+                                FROM karyawan k
+                                JOIN golongan g ON k.golongan_id = g.id
+                                WHERE g.nama_golongan != 'Dokter' 
+                                AND k.id NOT IN (
+                                    SELECT id_karyawan 
+                                    FROM asistens 
+                                    WHERE notrans = '$notrans'
+                                )");
 
-                            if ($query_asistens) {
-                                while ($row_asistens = mysqli_fetch_assoc($query_asistens)) {
-                                    echo "<option value='{$row_asistens['nama']}' data-id='{$row_asistens['id']}'>";
+                                if ($query_asistens) {
+                                    while ($row_asistens = mysqli_fetch_assoc($query_asistens)) {
+                                        echo "<option value='{$row_asistens['nama']}' data-id='{$row_asistens['id']}'>";
+                                    }
+                                } else {
+                                    echo "<option value=''>Tidak ada data asistens</option>";
                                 }
-                            } else {
-                                echo "<option value=''>Tidak ada data asistens</option>";
-                            }
                             ?>
                         </datalist>
                     </div>
@@ -366,13 +372,7 @@
                         <label class="form-label fw-bold">Transfer</label>
                         <div class="input-group">
                             <span class="input-group-text">Rp.</span>
-                            <input
-                                type="number"
-                                name="transfer"
-                                class="form-control"
-                                placeholder="Masukkan transfer"
-                                min="0"
-                                value="0">
+                            <input type="number" name="transfer" class="form-control" placeholder="Masukkan transfer" min="0" value="0">
                         </div>
                     </div>
                 </div>
@@ -402,12 +402,6 @@
                                 <input type="number" name="g_total" class="form-control" placeholder="Grand Total" readonly value="<?php echo $grand_total; ?>">
                             <?php } ?>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-12 mb-3">
-                        <p class="bg-danger text-white p-2 text-center">*Pastikan data sudah benar, Tidak dapat mengubah atau menghapus data setelah disimpan!</p>
                     </div>
                 </div>
 
