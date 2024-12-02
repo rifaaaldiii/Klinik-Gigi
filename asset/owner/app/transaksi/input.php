@@ -4,6 +4,19 @@ session_start();
 
 if (isset($_POST['simpan'])) {
     $notrans = $_POST['notrans'];
+    
+    // Cek apakah notrans sudah ada
+    $check_notrans = mysqli_query($conn, "SELECT notrans FROM transaksi WHERE notrans = '$notrans'");
+    
+    if (mysqli_num_rows($check_notrans) > 0) {
+        // Jika notrans sudah ada, ambil angka dari notrans
+        $angka = intval(substr($notrans, 2)); // Ambil angka setelah 'TN'
+        $angka++; // Tambah 1
+        
+        // Buat format baru dengan padding 0 di depan
+        $notrans = 'TN' . str_pad($angka, 3, '0', STR_PAD_LEFT);
+    }
+    
     $tanggal = $_POST['tanggal'];
     $nama_klien = $_POST['nama_klien'];
     $dokter = $_POST['dokter'];
