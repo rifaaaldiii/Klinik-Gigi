@@ -621,7 +621,7 @@ while ($row_detail = mysqli_fetch_assoc($query_detail)) {
         if (jasaMedis == 0) {
             totalJasaMedis = grandTotalSementara * 0.5;
         } else if (jasaMedis == 1) {
-            totalJasaMedis = grandTotalSementara;
+            totalJasaMedis = 0;
         } else if (jasaMedis == 2) {
             totalJasaMedis = 20000 * (1 + banyakTindakan);
         } else if (jasaMedis == 3) {
